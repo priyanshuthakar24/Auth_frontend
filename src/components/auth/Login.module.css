@@ -1,0 +1,33 @@
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #ecf0f2;
+    /* background: #c9d1d9; */
+}
+
+/* form 
+   */
+.form-container {
+    height: 60vh;
+    width: 50vw;
+}
+
+.title,
+.slogan {
+    text-align: center;
+}
+
+.btn {
+    width: 100%;
+}
+
+.auth-img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.alert {
+    margin-bottom: 1.5rem;
+}
