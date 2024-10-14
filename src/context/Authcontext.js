@@ -1,35 +1,56 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import axios from "axios";
+import { message } from "antd";
 const AuthContext = createContext();
 
 export const Authprovider = ({ children }) => {
-    const [token, settoken] = useState(null);
     const [userData, setUserData] = useState(null);
-    const [isAuthenticated, setisAuthenticated] = useState(false);
-    const storeData = JSON.parse(localStorage.getItem('user_data'));
-    useEffect(() => {
-        if (storeData) {
-            const { userToken, user } = storeData;
-            settoken(userToken);
-            setUserData(user);
-            setisAuthenticated(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const validateToken = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API}/api/auth/check-auth`, {
+                withCredentials: true
+            });
+            if (res.data.success) {
+                setIsAuthenticated(true);
+                setUserData(res.data.user);
+            }
+        } catch (error) {
+            setIsAuthenticated(false); // Handle error case
         }
-    }, [storeData]);
-    const login = (newToken, newData) => {
-        localStorage.setItem('user_data', JSON.stringify({ userToken: newToken, user: newData }));
-        settoken(newToken);
-        setUserData(newData);
-        setisAuthenticated(true);
     }
-    const logout = () => {
-        localStorage.removeItem('user_data');
-        settoken(null);
-        setUserData(null)
-        setisAuthenticated(false);
+
+    useEffect(() => {
+        validateToken();
+    }, [setIsAuthenticated]);
+
+
+    const login = (newData) => {
+        setUserData(newData);
+        setIsAuthenticated(true);
+    }
+
+    const logout = async () => {
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_API}/api/auth/logout`,
+                {},
+                { withCredentials: true }
+            );
+
+            console.log(res);
+            setUserData(null);
+            setIsAuthenticated(false);
+
+        } catch (error) {
+            console.log(error);
+            message.error(error.response.data.message);
+        }
     }
     return (
-        <AuthContext.Provider value={{ token, isAuthenticated, login, logout, userData }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, userData, }}>{children}</AuthContext.Provider>
     )
 }
 
-export const useAuth = () => useContext(AuthContext); 
+export const useAuth = () => useContext(AuthContext);

@@ -1,38 +1,29 @@
 import { useState } from "react";
-import { useAuth } from "../context/Authcontext";
-import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { message } from "antd";
+import { useAuth } from "../context/Authcontext";
 
 const useLogin = () => {
     const { login } = useAuth();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
     const nav = useNavigate();
+    axios.defaults.withCredentials = true;
     const loginUser = async (values) => {
-
         try {
             setError(null);
             setLoading(true);
-            const res = await fetch('http://localhost:4001/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values),
-            });
-            const data = await res.json();
-
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/auth/login`, values)
             if (res.status === 200) {
-                message.success(data.message);
-                login(data.token, data.user);
+                message.success(res.data.message);
+                login(res.data.user);
                 return nav('/');
-            } else if (res.status === 404) {
-                setError(data.message)
             } else {
-                message.error('Registration Failed');
+                message.error(res.data.message);
             }
         } catch (error) {
-            message.error('Registration Failed');
+            message.error(error.response.data.message);
         } finally { setLoading(false) }
     };
     return { loading, error, loginUser };
