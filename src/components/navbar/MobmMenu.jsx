@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { ChevronDown, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { menuItems } from "../../data/dummy";
 import { useAuth } from "../../context/Authcontext";
 import { Link, useNavigate } from "react-router-dom";
-const isAdmin = false;
 
 const MobmMenu = ({ Menus }) => {
-  const [isOpen, setIsOpne] = useState(false);
-  const [clicked, setClicked] = useState(null);
-  const { isAuthenticated, userData, logout } = useAuth();
+  const {
+    isAuthenticated,
+    userData,
+    logout,
+    isOpen,
+    clicked,
+    toggleDrawer,
+    setClicked,
+  } = useAuth();
   const nav = useNavigate();
-  const toggleDrawer = () => {
-    setIsOpne(!isOpen);
-    setClicked(null);
-  };
+
   const handlelogout = async () => {
     await logout();
     nav("/auth/login");
@@ -67,7 +69,7 @@ const MobmMenu = ({ Menus }) => {
                 variants={subMenuDrawer}
               >
                 {menuItems.map((item, i) => (
-                  <Link to={item.name} key={item.name}>
+                  <Link to={item.name} key={item.name} onClick={toggleDrawer}>
                     <li
                       key={i}
                       className="p-2 flex-center hover:bg-white/5 rounded-md cursor-pointer gap-x-2"
@@ -78,7 +80,10 @@ const MobmMenu = ({ Menus }) => {
                   </Link>
                 ))}
                 {userData.isAdmin ? (
-                  <li className="p-2 flex-center hover:bg-white/5 rounded-md cursor-pointer gap-x-2">
+                  <li
+                    className="p-2 flex-center hover:bg-white/5 rounded-md cursor-pointer gap-x-2"
+                    onClick={toggleDrawer}
+                  >
                     <LayoutDashboard size={17} />
                     <Link to="/dashbord">Dashboard</Link>
                   </li>
@@ -86,7 +91,10 @@ const MobmMenu = ({ Menus }) => {
 
                 <li
                   className="p-2 flex-center hover:bg-white/5 rounded-md cursor-pointer gap-x-2"
-                  onClick={handlelogout}
+                  onClick={() => {
+                    handlelogout();
+                    toggleDrawer();
+                  }}
                 >
                   <LogOut size={17} />
                   <span>LogOut</span>

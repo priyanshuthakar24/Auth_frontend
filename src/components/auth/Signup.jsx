@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 const Signup = () => {
   const { loading, signupUser } = useSignup();
   const handlesignup = async (values) => {
-    console.log("Metthod Call");
     await signupUser(values);
   };
   return (

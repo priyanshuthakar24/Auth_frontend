@@ -65,7 +65,7 @@ const Login = () => {
           </Form>
           {/* //! Forget-password Link */}
           <span className="text-center mb-2 text-gray-500">
-            <Link to="/forget-password">Forget Password?</Link>
+            <Link to="/auth/forgot-password" className="hover:underline">Forget Password?</Link>
           </span>
           <div className="text-center text-gray-600">
             <span>

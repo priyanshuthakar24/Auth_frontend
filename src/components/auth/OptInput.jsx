@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { message, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useAuth } from "../../context/Authcontext";
 const OtpInput = () => {
+  const { login } = useAuth();
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [isLoading, setisLoading] = useState(false);
   const inputref = useRef([]);
@@ -35,7 +37,7 @@ const OtpInput = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback( async (e) => {
     e.preventDefault();
     const verificationCode = code.join("");
     try {
@@ -47,20 +49,21 @@ const OtpInput = () => {
       );
       if (res.status === 200) {
         message.success(res.data.message);
+        login(res.data.user);
         navigate("/");
         setisLoading(false);
       }
     } catch (error) {
       message.error(error.response.data.message);
     }
-  };
+  },[code, login, navigate]);
 
   // Auto submit when all fields are filled
   useEffect(() => {
     if (code.every((digit) => digit !== "")) {
       handleSubmit(new Event("submit"));
     }
-  }, [code]);
+  }, [code, handleSubmit]);
 
   return (
     <div className=" max-w-md lg:w-full w-[21rem] rounded-lg shadow-lg overflow-hidden">

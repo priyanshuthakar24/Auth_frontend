@@ -6,6 +6,8 @@ import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import VerifyEmail from './components/auth/VerifyEmail';
 import { useAuth } from './context/Authcontext';
+import ForgotPasswordPage from './components/auth/ForgotPasswordPage';
+import ResetPassword from './components/auth/ResetPassword';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, userData } = useAuth()
@@ -29,7 +31,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
   return children;
 }
 function App() {
-  const { isAuthenticated } = useAuth();
+
   const route = createBrowserRouter([
     {
       path: '/',
@@ -76,6 +78,14 @@ function App() {
           path: 'auth/verify-email',
           element: <VerifyEmail />
         },
+        {
+          path: 'auth/forgot-password',
+          element: <RedirectAuthenticatedUser><ForgotPasswordPage /></RedirectAuthenticatedUser>
+        },
+        {
+          path: 'auth/reset-password/:token',
+          element: <RedirectAuthenticatedUser><ResetPassword /></RedirectAuthenticatedUser>
+        }
       ]
     },
     {

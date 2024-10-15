@@ -6,7 +6,12 @@ const AuthContext = createContext();
 export const Authprovider = ({ children }) => {
     const [userData, setUserData] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+    const [isOpen, setIsOpne] = useState(false);
+    const [clicked, setClicked] = useState(null);
+    const toggleDrawer = () => {
+        setIsOpne(!isOpen);
+        setClicked(null);
+    };
     const validateToken = async () => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API}/api/auth/check-auth`, {
@@ -33,13 +38,12 @@ export const Authprovider = ({ children }) => {
 
     const logout = async () => {
         try {
-            const res = await axios.post(
+            await axios.post(
                 `${process.env.REACT_APP_API}/api/auth/logout`,
                 {},
                 { withCredentials: true }
             );
 
-            console.log(res);
             setUserData(null);
             setIsAuthenticated(false);
 
@@ -49,7 +53,7 @@ export const Authprovider = ({ children }) => {
         }
     }
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, userData, }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, userData, setIsAuthenticated, setUserData, clicked, setClicked, isOpen, setIsOpne, toggleDrawer }}>{children}</AuthContext.Provider>
     )
 }
 

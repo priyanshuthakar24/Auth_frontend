@@ -9,7 +9,7 @@ import MobmMenu from "./MobmMenu";
 import CartCount from "./CartCount";
 import { useAuth } from "../../context/Authcontext";
 const Navbar = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setIsOpne } = useAuth();
 
   return (
     <header className="h-16 text-[15px] fixed inset-0 flex-center bg-black z-[1000]">
@@ -37,7 +37,10 @@ const Navbar = () => {
             </>
           ) : (
             <Link to="/auth/login">
-              <button className="bg-white/5 z-[999] relative px-3 py-1.5 shadow rounded-xl flex-center">
+              <button
+                className="bg-white/5 z-[999] relative px-3 py-1.5 shadow rounded-xl flex-center"
+                onClick={() => setIsOpne(false)}
+              >
                 Login
               </button>
             </Link>
