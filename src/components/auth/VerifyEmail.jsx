@@ -1,5 +1,4 @@
 import React from "react";
-import "./verifyemil.css";
 import OtpInput from "./OptInput";
 
 const VerifyEmail = () => {

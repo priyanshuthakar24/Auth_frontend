@@ -8,10 +8,14 @@ export const Authprovider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isOpen, setIsOpne] = useState(false);
     const [clicked, setClicked] = useState(null);
+
+    //! mobile menu open and close logic 
     const toggleDrawer = () => {
         setIsOpne(!isOpen);
         setClicked(null);
     };
+
+    //! check the user is authenticated or not bas sending the cookie Credential to the backend 
     const validateToken = async () => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API}/api/auth/check-auth`, {
@@ -30,12 +34,13 @@ export const Authprovider = ({ children }) => {
         validateToken();
     }, [setIsAuthenticated]);
 
-
+    //! when user is hit the login api and user is valid than it will set the state 
     const login = (newData) => {
         setUserData(newData);
         setIsAuthenticated(true);
     }
-
+    
+    //! logout logic to remove the cookie from the browser 
     const logout = async () => {
         try {
             await axios.post(

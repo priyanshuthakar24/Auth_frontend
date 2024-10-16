@@ -8,12 +8,14 @@ import Desktopview from "./Desktopview";
 import MobmMenu from "./MobmMenu";
 import CartCount from "./CartCount";
 import { useAuth } from "../../context/Authcontext";
+
 const Navbar = () => {
-  const { isAuthenticated, setIsOpne } = useAuth();
+  const { isAuthenticated, setIsOpne, userData } = useAuth();
 
   return (
     <header className="h-16 text-[15px] fixed inset-0 flex-center bg-black z-[1000]">
       <nav className="flex-center-between px-3.5 w-full max-w-7xl mx-auto">
+        {/* //! logo section  */}
         <div className="flex-center gap-x-3 z[999] relative ">
           <Link to="/" className="flex-center gap-x-3">
             <img src={logo} alt="logo" className="size-9" />
@@ -28,11 +30,13 @@ const Navbar = () => {
             <Searchbar />
           </ul>
         </div>
-        {/* if user will login that the profile mnu appear or sign In option will apear  */}
+
+        {/* //! if user will login that the profile menu appear and cart count will appear */}
+
         <div className="flex-center gap-x-5">
           {isAuthenticated ? (
             <>
-              <ProfileMenu latter="P" />
+              <ProfileMenu latter={userData.name[0]} />
               <CartCount count={2} />
             </>
           ) : (
@@ -46,7 +50,8 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* mobile view  */}
+          {/* //! mobile view  */}
+
           <div className="lg:hidden flex-center mt-2 ">
             <MobmMenu Menus={Menus} />
           </div>

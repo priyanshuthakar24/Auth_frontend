@@ -5,6 +5,8 @@ import singupic from "../../assets/img/signup3d.webp";
 import { Link } from "react-router-dom";
 const Signup = () => {
   const { loading, signupUser } = useSignup();
+
+  //! signup logic
   const handlesignup = async (values) => {
     await signupUser(values);
   };
@@ -12,32 +14,32 @@ const Signup = () => {
     <div className="h-[90vh] flex-center justify-center z-[10]">
       <div className=" bg-white flex-center justify-center p-8 gap-5 rounded-xl shadow-lg">
         <Flex vertical flex={1}>
+          {/* //! main Heading  */}
           <Typography.Title level={3} strong className="title">
             Sign In
           </Typography.Title>
           <Typography.Text type="secondary" strong className="slogan mb-8">
             Sign In with email
           </Typography.Text>
+
+          {/* //! signup form start here  */}
           <Form onFinish={handlesignup} layout="vertical">
             <Form.Item
-              // label="Full Name"
-              name="name"
               rules={[
                 {
                   required: true,
-                  message: "please input your full name",
+                  message: "Please input your full name",
                 },
               ]}
             >
               <Input size="large" placeholder="Name" className="z-0" />
             </Form.Item>
             <Form.Item
-              // label="Full Email"
               name="email"
               rules={[
                 {
                   required: true,
-                  message: "please input full email",
+                  message: "Please input full email",
                 },
                 {
                   type: "email",
@@ -48,12 +50,11 @@ const Signup = () => {
               <Input size="large" placeholder="Email" />
             </Form.Item>
             <Form.Item
-              // label="Password"
               name="password"
               rules={[
                 {
                   required: true,
-                  message: "please input your Password",
+                  message: "Please input your Password",
                 },
               ]}
             >
@@ -72,6 +73,8 @@ const Signup = () => {
               </Button>
             </Form.Item>
           </Form>
+
+          {/* //! login form link  */}
           <div className="text-center text-gray-600">
             <span>
               Already have an account ?&nbsp;&nbsp;
@@ -82,6 +85,7 @@ const Signup = () => {
           </div>
         </Flex>
 
+        {/* //! signup form image  */}
         <Flex flex={1} className="hidden lg:block">
           <img
             src={singupic}

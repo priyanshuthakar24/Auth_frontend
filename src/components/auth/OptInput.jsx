@@ -10,7 +10,7 @@ const OtpInput = () => {
   const [isLoading, setisLoading] = useState(false);
   const inputref = useRef([]);
   const navigate = useNavigate();
-
+  //! whne u put the input than it will check if the input is valid number or not than it will inser in the current position and ove to next box
   const handleChange = (index, value) => {
     let newcode = [...code];
     if (isNaN(value)) return; // Ensure only numbers are allowed
@@ -22,6 +22,7 @@ const OtpInput = () => {
     }
   };
 
+  // ! when u directly past the 6 digit code
   const handlePaste = (e) => {
     // Handle pasting a 6-digit OTP
     const pastedData = e.clipboardData.getData("text").slice(0, 6).split("");
@@ -31,34 +32,39 @@ const OtpInput = () => {
     e.preventDefault();
   };
 
+  //! when and backspace key press that it will check for the empty boks or remove the previos one
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputref.current[index - 1].focus();
     }
   };
 
-  const handleSubmit = useCallback( async (e) => {
-    e.preventDefault();
-    const verificationCode = code.join("");
-    try {
-      setisLoading(true);
-      const res = await axios.post(
-        `${process.env.REACT_APP_API}/api/auth/verify-email`,
-        { code: verificationCode },
-        { withCredentials: true }
-      );
-      if (res.status === 200) {
-        message.success(res.data.message);
-        login(res.data.user);
-        navigate("/");
-        setisLoading(false);
+  //! otp submit logic
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const verificationCode = code.join("");
+      try {
+        setisLoading(true);
+        const res = await axios.post(
+          `${process.env.REACT_APP_API}/api/auth/verify-email`,
+          { code: verificationCode },
+          { withCredentials: true }
+        );
+        if (res.status === 200) {
+          message.success(res.data.message);
+          login(res.data.user);
+          navigate("/");
+          setisLoading(false);
+        }
+      } catch (error) {
+        message.error(error.response.data.message);
       }
-    } catch (error) {
-      message.error(error.response.data.message);
-    }
-  },[code, login, navigate]);
+    },
+    [code, login, navigate]
+  );
 
-  // Auto submit when all fields are filled
+  //! Auto submit when all fields are filled
   useEffect(() => {
     if (code.every((digit) => digit !== "")) {
       handleSubmit(new Event("submit"));

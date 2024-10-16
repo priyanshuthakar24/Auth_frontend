@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { ChevronDown, LayoutDashboard, LogOut } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { Avatar } from "antd";
-import { menuItems } from "../../data/dummy";
+import { adminMenu, menuItems } from "../../data/dummy";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/Authcontext";
 
@@ -42,7 +42,7 @@ const ProfileMenu = (props) => {
       onHoverStart={toggleHoverMenu}
       onHoverEnd={toggleHoverMenu}
     >
-      {/* avata and chevronDow  */}
+      {/* //! avata and chevronDow  */}
       <Avatar
         style={{
           backgroundColor: "#f56a00 ",
@@ -50,11 +50,11 @@ const ProfileMenu = (props) => {
         }}
         size="default"
       >
-        {props.latter}
+        {props.latter.toUpperCase()}
       </Avatar>
       <ChevronDown className="mt-[0.6px] group-hover/link:rotate-180 duration-300" />
 
-      {/* drop down components  */}
+      {/* //! drop down components  */}
       <motion.div
         className="sub-menu"
         initial="exit"
@@ -80,24 +80,29 @@ const ProfileMenu = (props) => {
             </div>
           ))}
 
-          {/* if user hhas admin writes than this manu will appear   */}
-          {userData.isAdmin ? (
-            <div className="relative cursor-pointer">
-              <Link to="/dashbord">
-                <div className="flex-center gap-x-4 group/menubox px-2.5">
-                  <div
-                    className="bg-white/5 w-fit p-2 rounded-md
-              group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
-                  >
-                    <LayoutDashboard />
-                  </div>
-                  <div>
-                    <h6 className="font-semibold">Dashbord</h6>
-                  </div>
+          {/* //! if user hhas admin writes than this manu will appear   */}
+
+          {userData.isAdmin
+            ? adminMenu.map((item) => (
+                <div className="relative cursor-pointer" key={item.name}>
+                  <Link to={item.link}>
+                    <div className="flex-center gap-x-4 group/menubox px-2.5">
+                      <div
+                        className="bg-white/5 w-fit p-2 rounded-md
+             group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
+                      >
+                        <item.icon />
+                      </div>
+                      <div>
+                        <h6 className="font-semibold">{item.name}</h6>
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-            </div>
-          ) : null}
+              ))
+            : null}
+
+          {/* //! if the user is isAuthenticated than the logout menu will appear  */}
           {isAuthenticated ? (
             <div className="relative cursor-pointer" onClick={handlelogout}>
               <div className="flex-center gap-x-4 group/menubox px-2.5">
@@ -120,3 +125,23 @@ const ProfileMenu = (props) => {
 };
 
 export default ProfileMenu;
+
+// {
+/* {userData.isAdmin ? (
+            <div className="relative cursor-pointer">
+              <Link to="/dashbord">
+                <div className="flex-center gap-x-4 group/menubox px-2.5">
+                  <div
+                    className="bg-white/5 w-fit p-2 rounded-md
+              group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
+                  >
+                    <LayoutDashboard />
+                  </div>
+                  <div>
+                    <h6 className="font-semibold">Dashbord</h6>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ) : null} */
+// }

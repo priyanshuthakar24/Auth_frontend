@@ -6,12 +6,14 @@ const useSignup = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
     const nav = useNavigate();
-    axios.defaults.withCredentials = true;
+
     const signupUser = async (values) => {
         try {
             setError(null);
             setLoading(true);
-            const response = await axios.post(`${process.env.REACT_APP_API}/api/auth/signup`, values);
+            const response = await axios.post(`${process.env.REACT_APP_API}/api/auth/signup`, values, {
+                withCredentials: true
+            });
             if (response.status === 201) {
                 message.success(response.data.message);
                 return nav('/auth/verify-email');

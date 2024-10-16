@@ -9,7 +9,8 @@ const ResetPassword = () => {
   const [form] = Form.useForm();
   const { token } = useParams();
   const navigate = useNavigate();
-  // Handle form submission
+
+  //! Handle form submission
   const handleSubmit = async (values) => {
     const { password, passwordConfirm } = values;
     if (password === passwordConfirm) {
@@ -29,7 +30,7 @@ const ResetPassword = () => {
         setisLoading(false);
       }
     } else {
-        message.error("Passwords do not match.");
+      message.error("Passwords do not match.");
     }
   };
 
@@ -46,7 +47,7 @@ const ResetPassword = () => {
             Reset Password
           </h2>
           <Form form={form} onFinish={handleSubmit} layout="vertical">
-            {/* Password field */}
+            {/* //! Password field */}
             <Form.Item
               name="password"
               rules={[
@@ -59,7 +60,7 @@ const ResetPassword = () => {
               <Input.Password size="large" placeholder="Password" />
             </Form.Item>
 
-            {/* Confirm password field with custom validation */}
+            {/* //! Confirm password field with custom validation */}
             <Form.Item
               name="passwordConfirm"
               dependencies={["password"]}
@@ -86,7 +87,7 @@ const ResetPassword = () => {
               />
             </Form.Item>
 
-            {/* Submit button */}
+            {/* //! Submit button */}
             <Form.Item>
               <Button
                 size="large"

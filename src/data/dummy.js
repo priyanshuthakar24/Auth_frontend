@@ -1,5 +1,5 @@
-import { Heart, ShoppingBag, UserRound } from "lucide-react";
-
+import { Heart, LayoutDashboard, ShoppingBag, UserRound } from "lucide-react";
+//! general menu 
 export const Menus = [
     {
         name: 'Shop',
@@ -15,6 +15,7 @@ export const Menus = [
     },
 ]
 
+//! profile menu option if authenticated 
 export const menuItems = [
     {
         link: "myprofile",
@@ -33,3 +34,17 @@ export const menuItems = [
         icon: Heart,
     },
 ];
+
+//! admin menu option  if the user is authenticated and is  admin 
+export const adminMenu = [
+    {
+        link: 'dashbord',
+        name: 'Dashbord',
+        icon: LayoutDashboard
+    },
+    {
+        link: 'contact',
+        name: 'contact',
+        icon: LayoutDashboard
+    }
+]

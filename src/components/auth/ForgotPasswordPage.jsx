@@ -8,6 +8,7 @@ const ForgotPasswordPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
+  //! hadnle submit logic
   const handleSubmit = async ({ email }) => {
     try {
       setisLoading(true);
@@ -22,10 +23,10 @@ const ForgotPasswordPage = () => {
         setIsSubmitted(true);
         setisLoading(false);
       }
-      // setisLoading(false);
-      // await forgotPassword(email);
     } catch (error) {
       message.error(error.response.data.message);
+      setisLoading(false);
+    } finally {
       setisLoading(false);
     }
   };
@@ -67,7 +68,6 @@ const ForgotPasswordPage = () => {
                   className="rounded"
                 />
               </Form.Item>
-              {/* <Form.Item> */}
               <Button
                 color="default"
                 variant="solid"
@@ -78,7 +78,6 @@ const ForgotPasswordPage = () => {
               >
                 Submit
               </Button>
-              {/* </Form.Item> */}
             </Form>
           ) : (
             <div className="text-center">

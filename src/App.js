@@ -9,6 +9,7 @@ import { useAuth } from './context/Authcontext';
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage';
 import ResetPassword from './components/auth/ResetPassword';
 
+//!  This method check that user is authenticated or not also check that user is Verified or not if not than it will redired to login or verify-email page 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, userData } = useAuth()
   if (!isAuthenticated) {
@@ -20,6 +21,8 @@ const ProtectedRoute = ({ children }) => {
   return children;
 }
 
+//! This method is for the redirection if user is authenticated but not verify that it will redirect to verify-email also if the user is authenticated and user is verified that it will redirect to home  '/' page than login and signup are not accesable 
+
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, userData } = useAuth();
   if (isAuthenticated && !userData.isVerified) {
@@ -30,6 +33,8 @@ const RedirectAuthenticatedUser = ({ children }) => {
   }
   return children;
 }
+
+
 function App() {
 
   const route = createBrowserRouter([
@@ -88,6 +93,7 @@ function App() {
         }
       ]
     },
+    //! if any route that is not on the above roues than it will redirect to '/' route:- Universel route 
     {
       path: "*",
       element: <Navigate to='/' replace />,

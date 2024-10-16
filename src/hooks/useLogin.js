@@ -9,12 +9,14 @@ const useLogin = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
     const nav = useNavigate();
-    axios.defaults.withCredentials = true;
+
     const loginUser = async (values) => {
         try {
             setError(null);
             setLoading(true);
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/auth/login`, values)
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/auth/login`, values, {
+                withCredentials: true
+            })
             if (res.status === 200) {
                 message.success(res.data.message);
                 login(res.data.user);
