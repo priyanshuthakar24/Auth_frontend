@@ -25,6 +25,7 @@ const Signup = () => {
           {/* //! signup form start here  */}
           <Form onFinish={handlesignup} layout="vertical">
             <Form.Item
+              name="name"
               rules={[
                 {
                   required: true,

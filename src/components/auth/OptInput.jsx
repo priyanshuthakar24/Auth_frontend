@@ -59,6 +59,7 @@ const OtpInput = () => {
         }
       } catch (error) {
         message.error(error.response.data.message);
+        setisLoading(false);
       }
     },
     [code, login, navigate]

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Desktopview = ({ menu }) => {
   return (
+    // general menu lists
     <li className="group/link">
       <Link
         to={menu.name}

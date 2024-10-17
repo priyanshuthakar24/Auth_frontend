@@ -14,6 +14,7 @@ const useSignup = () => {
             const response = await axios.post(`${process.env.REACT_APP_API}/api/auth/signup`, values, {
                 withCredentials: true
             });
+            console.log(response);
             if (response.status === 201) {
                 message.success(response.data.message);
                 return nav('/auth/verify-email');
