@@ -1,4 +1,4 @@
-import { Heart, LayoutDashboard, ShoppingBag, UserRound } from "lucide-react";
+import { Heart, LayoutDashboard, Contact, ShoppingBag, UserRound } from "lucide-react";
 //! general menu 
 export const Menus = [
     {
@@ -45,6 +45,6 @@ export const adminMenu = [
     {
         link: 'contact',
         name: 'contact',
-        icon: LayoutDashboard
+        icon: Contact
     }
 ]

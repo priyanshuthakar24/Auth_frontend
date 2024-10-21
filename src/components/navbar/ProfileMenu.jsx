@@ -61,14 +61,18 @@ const ProfileMenu = (props) => {
         animate={isHover ? "enter" : "exit"}
         variants={subMenuAnimate}
       >
-        <div className="grid gap-7">
+        <div
+          className={`grid gap-7 ${
+            userData.isAdmin ? "grid-cols-2" : "grid-cols-1"
+          }`}
+        >
           {menuItems.map((item, i) => (
             <div key={i} className="relative cursor-pointer">
               <Link to={item.name}>
                 <div className="flex-center gap-x-4 group/menubox px-2.5">
                   <div
                     className="bg-black/5 w-fit p-2 rounded-md
-                  group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
+                    group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
                   >
                     <item.icon />
                   </div>
@@ -89,7 +93,7 @@ const ProfileMenu = (props) => {
                     <div className="flex-center gap-x-4 group/menubox px-2.5">
                       <div
                         className="bg-white/5 w-fit p-2 rounded-md
-             group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
+                        group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
                       >
                         <item.icon />
                       </div>
@@ -108,7 +112,7 @@ const ProfileMenu = (props) => {
               <div className="flex-center gap-x-4 group/menubox px-2.5">
                 <div
                   className="bg-white/5 w-fit p-2 rounded-md
-              group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
+                  group-hover/menubox:bg-white group-hover/menubox:text-gray-900 duration-300"
                 >
                   <LogOut />
                 </div>
